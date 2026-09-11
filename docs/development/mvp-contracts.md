@@ -7,10 +7,10 @@ Estos contratos unen el onboarding móvil actual con los datos que expondrá el 
 ```ts
 import {
   isDiscoverableCoach,
+  mockCoaches,
   type ClientOnboardingInput,
   type CoachApplicationInput,
-} from '../../src/contracts';
-import { mockCoaches } from '../../src/mocks/coach-list';
+} from '../../src';
 
 const catalogue = mockCoaches.filter(isDiscoverableCoach);
 ```
@@ -25,9 +25,12 @@ El catálogo **solo** debe ofrecer solicitud de acompañamiento cuando el perfil
 - `trainingLocation`: `gym` o `home`.
 - `trainingDaysPerWeek`: de 2 a 6.
 - `sessionDurationMinutes`: de 30 a 150, en intervalos de 15 minutos.
+- `equipment`: `full_gym`, `dumbbells`, `resistance_bands` o `bodyweight`. Este campo describe recursos disponibles y no duplica `trainingLocation`.
 - `healthConsiderations`: lista privada de condiciones declaradas. `none` no debe coexistir con otra opción. Si hay una opción distinta de `none`, la interfaz recomienda una consulta médica; no diagnostica ni prescribe.
 
 El backend obtiene el identificador del cliente desde la sesión autenticada, nunca del payload móvil.
+
+`specialtiesOfInterest` no forma parte del payload. El matchmaking obtiene las especialidades canónicas a partir de `goal` mediante el mapeo exhaustivo `COACH_SPECIALTIES_BY_CLIENT_GOAL`.
 
 ## Entrenador: postulación privada
 
@@ -51,12 +54,12 @@ El archivo contiene:
 
 ## Comprobación
 
-El repositorio aún no contiene el proyecto Expo ni una herramienta TypeScript instalada, por lo que esta rama aporta `tsconfig.contracts.json` pero no puede ejecutar la comprobación aquí.
+El repositorio aún no contiene el proyecto Expo. La comprobación aislada de contratos utiliza `tsconfig.contracts.json`.
 
 Cuando el frontend esté incorporado, ejecutar:
 
 ```bash
-npx -p typescript tsc -p tsconfig.contracts.json
+tsc -p tsconfig.contracts.json
 ```
 
-Además de TypeScript, `validateMockCoaches()` valida al cargar que cada ejemplo coincide con la forma de `CoachProfile` y que sus identificadores son únicos.
+Además de TypeScript, `validateMockCoaches()` valida al cargar que cada ejemplo coincide con la forma de `CoachProfile`, usa especialidades e idiomas canónicos y no repite identificadores ni valores en esas listas.

@@ -9,5 +9,5 @@
     "target": "ES2022",
     "skipLibCheck": true
   },
-  "include": ["src/contracts/**/*.ts", "src/mocks/**/*.ts", "src/mocks/**/*.json"]
+  "include": ["src/**/*.ts", "src/mocks/**/*.json"]
 }

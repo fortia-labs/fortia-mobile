@@ -3,8 +3,11 @@ import rawCoachList from './coach-list.json';
 import {
   COACH_SPECIALTIES,
   COACH_VERIFICATION_STATUSES,
+  isDiscoverableCoach,
   type CoachProfile,
 } from '../contracts/coach-profile';
+import { getCoachSpecialtiesForGoal } from '../contracts/matchmaking';
+import type { ClientGoal } from '../contracts/client-profile';
 import { LOCALES } from '../contracts/user-roles';
 
 const includes = <T extends string>(
@@ -58,6 +61,9 @@ const isCoachProfile = (value: unknown): value is CoachProfile => {
   );
 };
 
+const hasDuplicates = (values: readonly string[]): boolean =>
+  new Set(values).size !== values.length;
+
 export const mockCoaches: readonly CoachProfile[] = rawCoachList.map(
   (coach) => {
     if (!isCoachProfile(coach)) {
@@ -79,7 +85,30 @@ export const validateMockCoaches = (
     }
 
     ids.add(coach.id);
+
+    if (hasDuplicates(coach.specialties)) {
+      throw new Error(`Duplicate specialty for mock coach: ${coach.id}`);
+    }
+
+    if (hasDuplicates(coach.languages)) {
+      throw new Error(`Duplicate language for mock coach: ${coach.id}`);
+    }
   });
 };
 
 validateMockCoaches();
+
+/** Mock discovery uses the same canonical goal mapping as the backend contract. */
+export const getMockCoachesForGoal = (
+  goal: ClientGoal,
+): readonly CoachProfile[] => {
+  const matchingSpecialties = getCoachSpecialtiesForGoal(goal);
+
+  return mockCoaches.filter(
+    (coach) =>
+      isDiscoverableCoach(coach) &&
+      coach.specialties.some((specialty) =>
+        matchingSpecialties.includes(specialty),
+      ),
+  );
+};

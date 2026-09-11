@@ -17,13 +17,14 @@ El móvil envía un `ClientOnboardingInput`:
   "trainingLocation": "gym",
   "trainingDaysPerWeek": 4,
   "sessionDurationMinutes": 60,
-  "equipment": ["gym"],
-  "specialtiesOfInterest": ["hypertrophy"],
+  "equipment": ["full_gym"],
   "healthConsiderations": ["none"]
 }
 ```
 
 El servidor identifica al cliente con la sesión autenticada; el payload nunca incluye `clientId`.
+
+`equipment` usa únicamente los valores canónicos `full_gym`, `dumbbells`, `resistance_bands` y `bodyweight`. Las especialidades no se duplican en el payload: se derivan de `goal` mediante `COACH_SPECIALTIES_BY_CLIENT_GOAL`.
 
 `healthConsiderations` es información privada. Si contiene una opción distinta de `none`, el producto muestra una advertencia educativa y recomienda consultar a un profesional de salud. No diagnostica ni prescribe.
 
