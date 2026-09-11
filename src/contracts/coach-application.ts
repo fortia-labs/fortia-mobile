@@ -1,7 +1,4 @@
-import type {
-  CoachProfile,
-  CoachSpecialty,
-} from './coach-profile';
+import type { CoachProfile } from './coach-profile';
 import type { LocalizedText } from './user-roles';
 
 export const COACH_EDUCATION_TYPES = [
