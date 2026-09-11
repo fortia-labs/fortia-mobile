@@ -1,64 +1,72 @@
-# Contrato inicial cliente–entrenador
+# Contrato de onboarding y descubrimiento de FortIA
 
 ## Objetivo
 
-Definir los datos mínimos que el frontend enviará y recibirá durante el onboarding y la exploración de entrenadores.
+Definir el límite entre el onboarding móvil y los servicios que recomiendan entrenadores. La fuente de tipos es `src/contracts`.
 
-## Envío de onboarding
+## Envío del onboarding del cliente
 
-El frontend enviará:
+El móvil envía un `ClientOnboardingInput`:
 
 ```json
 {
-  "goal": "hypertrophy",
+  "locale": "es",
+  "goal": "muscle_gain",
+  "focus": "lower_body",
   "experienceLevel": "intermediate",
+  "trainingLocation": "gym",
   "trainingDaysPerWeek": 4,
-  "equipment": ["gym"],
-  "specialtiesOfInterest": ["hypertrophy"],
-  "restrictions": [],
-  "locale": "es"
+  "sessionDurationMinutes": 60,
+  "equipment": ["full_gym"],
+  "healthConsiderations": ["none"]
 }
 ```
 
-El backend validará los valores permitidos y asociará el resultado al cliente autenticado.
+El servidor identifica al cliente con la sesión autenticada; el payload nunca incluye `clientId`.
+
+`equipment` usa únicamente los valores canónicos `full_gym`, `dumbbells`, `resistance_bands` y `bodyweight`. Las especialidades no se duplican en el payload: se derivan de `goal` mediante `COACH_SPECIALTIES_BY_CLIENT_GOAL`.
+
+`healthConsiderations` es información privada. Si contiene una opción distinta de `none`, el producto muestra una advertencia educativa y recomienda consultar a un profesional de salud. No diagnostica ni prescribe.
 
 ## Respuesta de entrenadores sugeridos
+
+La respuesta contiene solo `CoachProfile` público y razones de coincidencia localizadas:
 
 ```json
 {
   "coaches": [
     {
-      "id": "coach-001",
-      "name": "Nombre del entrenador",
-      "avatarUrl": null,
+      "id": "coach-alba-rojas",
+      "displayName": "Alba Rojas",
       "specialties": ["hypertrophy"],
-      "experienceYears": 6,
-      "methodology": "Descripción breve",
-      "priceReference": "Desde ...",
       "verificationStatus": "approved",
-      "matchReasons": ["Especialista en tu objetivo"]
+      "acceptingClients": true,
+      "matchReasons": [
+        {
+          "es": "Experiencia compatible con tu objetivo",
+          "en": "Experience aligned with your goal"
+        }
+      ]
     }
   ]
 }
 ```
 
-## Solicitud de coaching
+Un entrenador solo aparece y puede recibir solicitudes cuando `verificationStatus` es `approved` y `acceptingClients` es `true`.
 
-El cliente enviará:
+## Postulación de entrenador
+
+El onboarding profesional usa `CoachApplicationInput`. Identidad, número de documento, código de certificación, archivos y las tres respuestas de evaluación son privados. Nunca se envían en `CoachProfile` ni a otros clientes.
+
+La postulación sigue el orden `draft` → `questionnaire_submitted` → `documents_required` → `under_review`; los documentos solo se envían después de ser requeridos. La revisión manual puede solicitar cambios, aprobar o rechazar la postulación. El perfil se mantiene fuera del catálogo hasta la aprobación administrativa.
+
+## Solicitud de acompañamiento
 
 ```json
 {
-  "coachId": "coach-001",
-  "message": "Quiero trabajar mi fuerza y mejorar mi técnica."
+  "coachId": "coach-alba-rojas",
+  "message": "Quiero mejorar mi fuerza y técnica."
 }
 ```
 
-El backend creará una relación con estado `requested`. El entrenador podrá aceptarla o rechazarla.
-
-## Reglas
-
-- Nunca se confía en el `clientId` enviado por el móvil; se obtiene del usuario autenticado.
-- Un entrenador no puede aparecer como sugerido si su verificación no está `approved`.
-- El cliente solo recibe información pública del perfil.
-- Los mensajes y notas privadas no se incluyen en el perfil público.
-- Los errores deben devolver códigos manejables por el frontend, sin exponer información sensible.
+El backend crea una relación `requested`. El entrenador puede aceptarla o rechazarla.

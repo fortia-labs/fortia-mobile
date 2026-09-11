@@ -1,0 +1,110 @@
+[
+  {
+    "id": "coach-alba-rojas",
+    "displayName": "Alba Rojas",
+    "bio": {
+      "es": "Entrenadora de hipertrofia para personas que buscan progresar con calma, técnica y seguimiento semanal.",
+      "en": "Hypertrophy coach for people who want to progress with calm, technique, and weekly follow-up."
+    },
+    "specialties": ["hypertrophy"],
+    "experienceYears": 7,
+    "methodology": {
+      "es": "Volumen progresivo, técnica de ejercicios y ajustes semanales según adherencia.",
+      "en": "Progressive volume, exercise technique, and weekly adjustments based on adherence."
+    },
+    "languages": ["es", "en"],
+    "acceptingClients": true,
+    "verificationStatus": "approved",
+    "priceReference": { "amount": 45, "currency": "USD", "period": "month" }
+  },
+  {
+    "id": "coach-bruno-leon",
+    "displayName": "Bruno León",
+    "bio": {
+      "es": "Coach de fuerza con enfoque en técnica, progresión de cargas y entrenamiento sostenible.",
+      "en": "Strength coach focused on technique, load progression, and sustainable training."
+    },
+    "specialties": ["strength"],
+    "experienceYears": 9,
+    "methodology": {
+      "es": "Programación simple y medible con prioridad en movimientos básicos.",
+      "en": "Simple, measurable programming that prioritizes foundational lifts."
+    },
+    "languages": ["es"],
+    "acceptingClients": true,
+    "verificationStatus": "approved",
+    "priceReference": { "amount": 55, "currency": "USD", "period": "month" }
+  },
+  {
+    "id": "coach-camila-ortiz",
+    "displayName": "Camila Ortiz",
+    "bio": {
+      "es": "Preparadora enfocada en fuerza e hipertrofia para personas con poco tiempo disponible.",
+      "en": "Coach focused on strength and hypertrophy for people with limited time."
+    },
+    "specialties": ["hypertrophy", "strength"],
+    "experienceYears": 5,
+    "methodology": {
+      "es": "Rutinas eficientes, selección de ejercicios y educación para entrenar con autonomía.",
+      "en": "Efficient routines, exercise selection, and education for autonomous training."
+    },
+    "languages": ["es", "en"],
+    "acceptingClients": true,
+    "verificationStatus": "approved",
+    "priceReference": { "amount": 40, "currency": "USD", "period": "month" }
+  },
+  {
+    "id": "coach-dario-vega",
+    "displayName": "Darío Vega",
+    "bio": {
+      "es": "Entrenador de powerlifting para atletas que desean construir fuerza con una planificación clara.",
+      "en": "Powerlifting coach for athletes who want to build strength with clear planning."
+    },
+    "specialties": ["powerlifting", "strength"],
+    "experienceYears": 11,
+    "methodology": {
+      "es": "Técnica de competencia, autorregulación y bloques de fuerza específicos.",
+      "en": "Competition technique, autoregulation, and focused strength blocks."
+    },
+    "languages": ["es", "en"],
+    "acceptingClients": true,
+    "verificationStatus": "approved",
+    "priceReference": { "amount": 65, "currency": "USD", "period": "month" }
+  },
+  {
+    "id": "coach-elena-paz",
+    "displayName": "Elena Paz",
+    "bio": {
+      "es": "Profesional en proceso de revisión para acompañamiento de hipertrofia y hábitos.",
+      "en": "Professional under review for hypertrophy and habit coaching."
+    },
+    "specialties": ["hypertrophy"],
+    "experienceYears": 4,
+    "methodology": {
+      "es": "Acompañamiento gradual, seguimiento de hábitos y aprendizaje técnico.",
+      "en": "Gradual coaching, habit follow-up, and technical learning."
+    },
+    "languages": ["es"],
+    "acceptingClients": true,
+    "verificationStatus": "pending",
+    "priceReference": { "amount": 35, "currency": "USD", "period": "month" }
+  },
+  {
+    "id": "coach-felipe-nova",
+    "displayName": "Felipe Nova",
+    "bio": {
+      "es": "Coach de fuerza que tiene el cupo cerrado temporalmente.",
+      "en": "Strength coach whose client roster is temporarily full."
+    },
+    "specialties": ["strength", "powerlifting"],
+    "experienceYears": 8,
+    "methodology": {
+      "es": "Progresión de cargas, control de fatiga y planificación por bloques.",
+      "en": "Load progression, fatigue management, and block planning."
+    },
+    "languages": ["es", "en"],
+    "acceptingClients": false,
+    "verificationStatus": "approved",
+    "priceReference": { "amount": 60, "currency": "USD", "period": "month" }
+  }
+]
