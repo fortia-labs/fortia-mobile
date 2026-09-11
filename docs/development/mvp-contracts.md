@@ -7,15 +7,9 @@ Estos contratos unen el onboarding móvil actual con los datos que expondrá el 
 ```ts
 import {
   isDiscoverableCoach,
-  mockCoaches,
   type ClientOnboardingInput,
   type CoachApplicationInput,
 } from '../../src/contracts';
-```
-
-Los datos simulados se consumen desde:
-
-```ts
 import { mockCoaches } from '../../src/mocks/coach-list';
 
 const catalogue = mockCoaches.filter(isDiscoverableCoach);
