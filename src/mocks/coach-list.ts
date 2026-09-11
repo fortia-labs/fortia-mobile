@@ -19,23 +19,42 @@ const isLocalizedText = (value: unknown): boolean =>
   isRecord(value) &&
   LOCALES.every((locale) => typeof value[locale] === 'string');
 
+const isPriceReference = (value: unknown): boolean => {
+  if (typeof value === 'undefined') return true;
+  if (!isRecord(value)) return false;
+
+  return (
+    typeof value.amount === 'number' &&
+    Number.isFinite(value.amount) &&
+    includes(['USD', 'COP'] as const, value.currency) &&
+    includes(['month', 'program'] as const, value.period)
+  );
+};
+
 const isCoachProfile = (value: unknown): value is CoachProfile => {
   if (!isRecord(value)) return false;
 
   return (
     typeof value.id === 'string' &&
     typeof value.displayName === 'string' &&
+    (typeof value.avatarUrl === 'undefined' ||
+      typeof value.avatarUrl === 'string') &&
     isLocalizedText(value.bio) &&
     Array.isArray(value.specialties) &&
+    value.specialties.length > 0 &&
     value.specialties.every((specialty) =>
       includes(COACH_SPECIALTIES, specialty),
     ) &&
     typeof value.experienceYears === 'number' &&
+    Number.isInteger(value.experienceYears) &&
+    value.experienceYears >= 0 &&
     isLocalizedText(value.methodology) &&
     Array.isArray(value.languages) &&
+    value.languages.length > 0 &&
     value.languages.every((locale) => includes(LOCALES, locale)) &&
     typeof value.acceptingClients === 'boolean' &&
-    includes(COACH_VERIFICATION_STATUSES, value.verificationStatus)
+    includes(COACH_VERIFICATION_STATUSES, value.verificationStatus) &&
+    isPriceReference(value.priceReference)
   );
 };
 
