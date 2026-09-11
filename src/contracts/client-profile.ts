@@ -1,4 +1,3 @@
-import type { CoachSpecialty } from './coach-profile';
 import type { Locale } from './user-roles';
 
 export const CLIENT_GOALS = [
@@ -32,8 +31,9 @@ export const TRAINING_LOCATIONS = ['gym', 'home'] as const;
 export type TrainingLocation = (typeof TRAINING_LOCATIONS)[number];
 
 export const EQUIPMENT_OPTIONS = [
-  'gym',
-  'home',
+  'full_gym',
+  'dumbbells',
+  'resistance_bands',
   'bodyweight',
 ] as const;
 
@@ -51,7 +51,6 @@ export type ClientProfile = Readonly<{
   experienceLevel: ExperienceLevel;
   trainingDaysPerWeek: number;
   equipment: readonly Equipment[];
-  specialtiesOfInterest: readonly CoachSpecialty[];
   focus?: TrainingFocus;
   trainingLocation?: TrainingLocation;
   sessionDurationMinutes?: number;

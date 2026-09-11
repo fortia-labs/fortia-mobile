@@ -5,7 +5,6 @@ import type {
   TrainingFocus,
   TrainingLocation,
 } from './client-profile';
-import type { CoachSpecialty } from './coach-profile';
 import type { Locale } from './user-roles';
 
 export const HEALTH_CONSIDERATIONS = [
@@ -35,7 +34,6 @@ export type ClientOnboardingInput = Readonly<{
   trainingDaysPerWeek: 2 | 3 | 4 | 5 | 6;
   sessionDurationMinutes: 30 | 45 | 60 | 75 | 90 | 105 | 120 | 135 | 150;
   equipment: readonly Equipment[];
-  specialtiesOfInterest: readonly CoachSpecialty[];
   healthConsiderations: readonly HealthConsideration[];
 }>;
 
