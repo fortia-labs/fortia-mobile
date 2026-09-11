@@ -55,9 +55,9 @@ Un entrenador solo aparece y puede recibir solicitudes cuando `verificationStatu
 
 ## Postulación de entrenador
 
-El onboarding profesional usa `CoachApplicationInput`. Identidad, número de documento, código de certificación, archivos y respuestas de evaluación son privados. Nunca se envían en `CoachProfile` ni a otros clientes.
+El onboarding profesional usa `CoachApplicationInput`. Identidad, número de documento, código de certificación, archivos y las tres respuestas de evaluación son privados. Nunca se envían en `CoachProfile` ni a otros clientes.
 
-Tras el envío, la postulación queda en revisión manual. El perfil se mantiene fuera del catálogo hasta la aprobación administrativa.
+La postulación sigue el orden `draft` → `questionnaire_submitted` → `documents_required` → `under_review`; los documentos solo se envían después de ser requeridos. La revisión manual puede solicitar cambios, aprobar o rechazar la postulación. El perfil se mantiene fuera del catálogo hasta la aprobación administrativa.
 
 ## Solicitud de acompañamiento
 

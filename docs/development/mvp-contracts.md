@@ -33,9 +33,11 @@ El backend obtiene el identificador del cliente desde la sesión autenticada, nu
 
 `CoachProfile` es el perfil público. No contiene documento de identidad, correo, código de certificado, archivos ni notas de revisión.
 
-`CoachApplicationInput` modela el flujo privado: identidad, formación, documentos de respaldo, respuestas a dos escenarios, casos de éxito y filosofía. Los archivos se representan únicamente por metadatos y una clave privada de almacenamiento; no viajan como contenido del documento ni como URL pública.
+`CoachApplicationInput` modela los datos privados de identidad, formación, casos de éxito y filosofía. La evaluación contiene exactamente tres escenarios de conocimiento y seguridad. `CoachQuestionnaireSubmissionInput` y `CoachDocumentsSubmissionInput` separan las fronteras de envío para impedir que el cliente móvil solicite documentos antes de que el backend los requiera.
 
-Al enviarse, la postulación pasa a `submitted` o `under_review`; el perfil no aparece en el catálogo hasta que un administrador asigna `verificationStatus: 'approved'`.
+Los archivos se representan únicamente por metadatos y una clave privada de almacenamiento; no viajan como contenido del documento ni como URL pública.
+
+La progresión contractual es `draft` → `questionnaire_submitted` → `documents_required` → `under_review`. La revisión puede terminar en `approved`, `rejected` o `changes_requested`; una cuenta aprobada también puede pasar a `suspended`. El perfil no aparece en el catálogo hasta que un administrador asigna `verificationStatus: 'approved'`.
 
 ## Datos simulados
 

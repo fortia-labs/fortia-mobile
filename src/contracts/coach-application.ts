@@ -18,6 +18,7 @@ export type CoachDocumentType = (typeof COACH_DOCUMENT_TYPES)[number];
 export const COACH_ASSESSMENT_QUESTIONS = [
   'safety_lumbar_adaptation',
   'programming_beginner_short_sessions',
+  'health_red_flags_referral',
 ] as const;
 
 export type CoachAssessmentQuestionId =
@@ -34,10 +35,13 @@ export type CoachPhilosophy = (typeof COACH_PHILOSOPHIES)[number];
 
 export const COACH_APPLICATION_STATUSES = [
   'draft',
-  'submitted',
+  'questionnaire_submitted',
+  'documents_required',
   'under_review',
+  'changes_requested',
   'approved',
   'rejected',
+  'suspended',
 ] as const;
 
 export type CoachApplicationStatus =
@@ -71,11 +75,7 @@ export type CoachSuccessCase = Readonly<{
  */
 export type CoachApplicationInput = Readonly<{
   legalName: string;
-  identityDocumentNumber: string;
   educationType: CoachEducationType;
-  credentialVerificationCode: string;
-  documents: readonly CoachDocumentMetadata[];
-  assessmentAnswers: readonly CoachAssessmentAnswer[];
   successCases: readonly CoachSuccessCase[];
   philosophies: readonly CoachPhilosophy[];
   publicProfileDraft: Pick<
@@ -91,11 +91,29 @@ export type CoachApplicationInput = Readonly<{
   >;
 }>;
 
+/**
+ * The questionnaire is submitted before documents are requested. Keeping this
+ * boundary separate prevents the mobile client from uploading sensitive files
+ * during the initial professional-history step.
+ */
+export type CoachQuestionnaireSubmissionInput = Readonly<{
+  assessmentAnswers: readonly CoachAssessmentAnswer[];
+}>;
+
+/** Documents can only be attached after the backend enters documents_required. */
+export type CoachDocumentsSubmissionInput = Readonly<{
+  identityDocumentNumber: string;
+  credentialVerificationCode: string;
+  documents: readonly CoachDocumentMetadata[];
+}>;
+
 export type CoachApplication = Readonly<
   CoachApplicationInput & {
     id: string;
     coachId: string;
     status: CoachApplicationStatus;
+    assessmentAnswers?: readonly CoachAssessmentAnswer[];
+    documents?: readonly CoachDocumentMetadata[];
     submittedAt?: string;
   }
 >;
